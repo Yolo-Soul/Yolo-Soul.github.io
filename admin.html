@@ -48,7 +48,7 @@ input:focus{border-color:#3b82f6;box-shadow:0 0 0 4px rgba(59,130,246,.1)}
 .panel-section:hover{transform:translateY(-3px);box-shadow:0 15px 35px rgba(0,0,0,.09)}
 .panel-section h3{font-size:20px;margin-bottom:24px}
 .form-row{display:flex;gap:14px;margin-bottom:20px;flex-wrap:wrap;align-items:center}
-.form-row input,.form-row select{flex:1;min-width:180px;padding:16px;border:1px solid #e6e8eb;border-radius:16px}
+.form-row input,.form-row select{flex:1;min-width:180px;padding:16px;border:1px solid #e6e8eb;border-radius:16px;transition:all .2s}
 
 .item{
   display:flex;justify-content:space-between;align-items:center;
@@ -63,7 +63,7 @@ input:focus{border-color:#3b82f6;box-shadow:0 0 0 4px rgba(59,130,246,.1)}
 
 @keyframes fadeInUp{from{opacity:0;transform:translateY(40px)}to{opacity:1;transform:translateY(0)}}
 
-/* 🔥 新增：上传按钮样式 */
+/* 上传按钮样式 */
 .upload-btn-wrapper {
   position: relative;
   overflow: hidden;
@@ -71,14 +71,19 @@ input:focus{border-color:#3b82f6;box-shadow:0 0 0 4px rgba(59,130,246,.1)}
   margin-bottom: 10px;
 }
 .upload-btn {
-  border: 2px solid gray;
-  color: gray;
+  border: 2px solid #3b82f6;
+  color: #3b82f6;
   background-color: white;
   padding: 8px 20px;
   border-radius: 8px;
-  font-size: 16px;
-  font-weight: bold;
+  font-size: 14px;
+  font-weight: 600;
   cursor: pointer;
+  transition: all 0.2s;
+}
+.upload-btn:hover {
+  background: #3b82f6;
+  color: white;
 }
 .upload-btn-wrapper input[type=file] {
   font-size: 100px;
@@ -88,13 +93,17 @@ input:focus{border-color:#3b82f6;box-shadow:0 0 0 4px rgba(59,130,246,.1)}
   opacity: 0;
   cursor: pointer;
 }
-/* 🔥 预览图 */
 .preview-img {
   max-width: 150px;
   max-height: 150px;
   border-radius: 16px;
   margin-top: 10px;
   box-shadow: 0 4px 12px rgba(0,0,0,.1);
+}
+.tip-text {
+  font-size: 12px;
+  color: #666;
+  margin-top: 4px;
 }
 </style>
 </head>
@@ -110,51 +119,57 @@ input:focus{border-color:#3b82f6;box-shadow:0 0 0 4px rgba(59,130,246,.1)}
 <div class="admin-panel" id="adminPanel">
   <h2 style="text-align:center;margin-bottom:40px;">作品集管理后台</h2>
 
-  <!-- 🔥 1. 个人照片上传区 -->
+  <!-- 1. 个人照片区（修复逻辑：本地预览+直链输入） -->
   <div class="panel-section">
-    <h3>个人照片 (本地上传)</h3>
-    <div class="upload-btn-wrapper">
-      <button class="upload-btn">选择照片</button>
-      <input type="file" id="photoInput" accept="image/*" onchange="handlePhotoUpload(this)">
+    <h3>个人照片</h3>
+    <div class="form-row" style="align-items: flex-start;">
+      <div style="flex:1;">
+        <div class="upload-btn-wrapper">
+          <button class="upload-btn">选择本地照片（仅预览）</button>
+          <input type="file" id="photoInput" accept="image/*" onchange="previewPhoto(this)">
+        </div>
+        <p class="tip-text">⚠️ 仅本地预览，需填下方直链才能生效</p>
+        <input type="text" id="photoUrlInput" placeholder="粘贴照片直链（如sm.ms图床链接）" style="margin-top:10px;">
+      </div>
+      <div style="text-align:center;">
+        <img id="photoPreview" class="preview-img" src="https://picsum.photos/400/400">
+      </div>
     </div>
-    <div style="text-align:center;margin-top:10px;">
-      <img id="photoPreview" class="preview-img" src="https://picsum.photos/400/400">
-    </div>
-    <button class="btn btn-primary" style="margin-top:10px;" onclick="updatePhotoFromHost()">更新照片</button>
+    <button class="btn btn-primary" onclick="updatePhoto()">更新照片</button>
   </div>
 
-  <!-- 🔥 2. 简历上传区 -->
+  <!-- 2. 简历附件区 -->
   <div class="panel-section">
-    <h3>简历附件 (本地上传)</h3>
-    <div class="upload-btn-wrapper">
-      <button class="upload-btn">选择简历 (PDF)</button>
-      <input type="file" id="resumeInput" accept=".pdf" onchange="handleResumeUpload(this)">
+    <h3>简历附件</h3>
+    <div class="form-row">
+      <input type="text" id="resumeUrlInput" placeholder="粘贴简历PDF直链（如奶牛快传/阿里云盘链接）">
+      <button class="btn btn-primary" onclick="updateResume()">更新简历</button>
     </div>
-    <button class="btn btn-primary" onclick="updateResumeFromHost()">更新简历</button>
+    <p class="tip-text">⚠️ 需先将PDF上传到文件托管服务，获取直链</p>
   </div>
 
-  <!-- 🔥 3. 视频分类 -->
+  <!-- 3. 视频分类区 -->
   <div class="panel-section">
     <h3>视频分类</h3>
     <div class="form-row">
-      <input id="newCatName" placeholder="分类名称">
-      <button class="btn btn-primary" onclick="addCategory()">添加</button>
+      <input id="newCatName" placeholder="输入分类名称（如：产品视频/Vlog/日常）">
+      <button class="btn btn-primary" onclick="addCategory()">添加分类</button>
     </div>
     <div id="categoryList"></div>
   </div>
 
-  <!-- 🔥 4. 视频上传区 -->
+  <!-- 4. 视频作品区（修复分类绑定逻辑） -->
   <div class="panel-section">
-    <h3>视频作品 (本地上传)</h3>
+    <h3>视频作品</h3>
     <div class="form-row">
-      <select id="videoCatSelect"></select>
-      <div class="upload-btn-wrapper" style="flex:none;">
-        <button class="upload-btn">选择视频</button>
-        <input type="file" id="videoInput" accept="video/mp4,video/mov,video/avi" onchange="handleVideoUpload(this)">
-      </div>
-      <input type="text" id="newVideoTitle" placeholder="视频标题">
-      <button class="btn btn-primary" onclick="addVideoFromHost()">添加视频</button>
+      <select id="videoCatSelect" style="flex:0.8;">
+        <option value="">请先选择分类</option>
+      </select>
+      <input type="text" id="videoUrlInput" placeholder="粘贴视频直链（如B站/阿里云盘链接）" style="flex:1.5;">
+      <input type="text" id="videoTitleInput" placeholder="输入视频标题" style="flex:1;">
+      <button class="btn btn-primary" onclick="addVideo()">添加视频</button>
     </div>
+    <p class="tip-text">⚠️ 需先添加分类，再选择分类添加视频</p>
     <div id="videoList"></div>
   </div>
 
@@ -164,20 +179,17 @@ input:focus{border-color:#3b82f6;box-shadow:0 0 0 4px rgba(59,130,246,.1)}
 </div>
 
 <script>
-// 🔐 这里改密码！给不同的人做就改这里
+// 🔐 后台密码（给别人做网站就改这里！）
 const ADMIN_PASSWORD = '1999414'; 
 
-// 🔥 本地存储数据
+// 本地存储数据（所有修改都存在浏览器本地，不影响GitHub）
 let portfolioData = JSON.parse(localStorage.getItem('portfolioData')) || {
   avatarUrl: "https://picsum.photos/400/400",
   resumeUrl: "",
   categories: []
 };
 
-// 🔥 临时存储上传后的直链
-let tempPhotoUrl = "";
-let tempVideoUrl = "";
-
+// 登录逻辑
 function login(){
   const p = document.getElementById('adminPwd').value;
   if(p === ADMIN_PASSWORD){
@@ -189,116 +201,183 @@ function login(){
   }
 }
 
+// 初始化后台
 function initAdmin(){
   document.getElementById('photoPreview').src = portfolioData.avatarUrl;
+  document.getElementById('photoUrlInput').value = portfolioData.avatarUrl;
+  document.getElementById('resumeUrlInput').value = portfolioData.resumeUrl;
   renderCatSelect();
   renderCategoryList();
   renderVideoList();
 }
 
-// ================= 上传逻辑 =================
-// 1. 照片上传 (模拟图床)
-function handlePhotoUpload(input) {
-  if (input.files.length > 0) {
-    alert("已选择本地照片:\n" + input.files[0].name + "\n(模拟上传至图床)");
-    // 实际项目这里会上传到服务器获取 url
-    // 模拟：我们直接用 picsum 作为示例，你实际使用时替换为真图床
-    tempPhotoUrl = "https://picsum.photos/400/400?rand=" + Math.random(); 
-    document.getElementById('photoPreview').src = tempPhotoUrl;
+// ================= 照片功能（修复后） =================
+// 本地预览照片（不上传到服务器，仅本地看）
+function previewPhoto(input) {
+  if (input.files && input.files[0]) {
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      document.getElementById('photoPreview').src = e.target.result;
+    }
+    reader.readAsDataURL(input.files[0]);
+    alert("✅ 本地照片预览成功！\n请粘贴照片直链到输入框，再点「更新照片」生效");
   }
-}
-function updatePhotoFromHost(){
-  if(tempPhotoUrl) {
-    portfolioData.avatarUrl = tempPhotoUrl;
-    saveData();
-    alert("照片更新成功！");
-    window.location.reload();
-  } else alert("请先选择照片");
 }
 
-// 2. 简历上传 (模拟图床)
-function handleResumeUpload(input) {
-  if (input.files.length > 0) {
-    alert("已选择简历:\n" + input.files[0].name + "\n(模拟上传至图床)");
-    // 模拟：填入一个示例链接
-    portfolioData.resumeUrl = "https://example.com/resume.pdf"; 
-    saveData();
-    alert("简历链接已准备好！");
+// 更新照片（用直链）
+function updatePhoto(){
+  const url = document.getElementById('photoUrlInput').value.trim();
+  if(!url) {
+    alert("❌ 请先粘贴照片直链！");
+    return;
   }
-}
-function updateResumeFromHost(){
-  // 逻辑同上，直接用示例链接
-  window.open("https://example.com/resume.pdf", "_blank");
-}
-
-// 3. 视频上传 (模拟图床)
-function handleVideoUpload(input) {
-  if (input.files.length > 0) {
-    alert("已选择视频:\n" + input.files[0].name + "\n(模拟上传至图床)");
-    // 模拟：填入一个示例链接
-    tempVideoUrl = "https://picsum.photos/400/225"; 
-  }
-}
-function addVideoFromHost(){
-  const catIdx = document.getElementById('videoCatSelect').value;
-  const title = document.getElementById('newVideoTitle').value.trim();
-  
-  if(!catIdx || !title || !tempVideoUrl) return alert("请完善信息！");
-  
-  portfolioData.categories[catIdx].videos.push({ url: tempVideoUrl, title: title });
+  portfolioData.avatarUrl = url;
   saveData();
-  renderVideoList();
-  document.getElementById('newVideoTitle').value = '';
+  alert("✅ 照片更新成功！刷新主页即可看到");
+  window.location.reload();
 }
 
-// ================= 基础功能 =================
+// ================= 简历功能 =================
+function updateResume(){
+  const url = document.getElementById('resumeUrlInput').value.trim();
+  portfolioData.resumeUrl = url;
+  saveData();
+  alert("✅ 简历更新成功！点击主页按钮可测试");
+}
+
+// ================= 分类功能（修复后） =================
+// 渲染分类下拉框
 function renderCatSelect(){
-  const s = document.getElementById('videoCatSelect'); s.innerHTML = '';
-  portfolioData.categories.forEach((c, i)=>{
-    const o = document.createElement('option'); o.value = i; o.textContent = c.name; s.appendChild(o);
+  const select = document.getElementById('videoCatSelect');
+  select.innerHTML = '<option value="">请先选择分类</option>';
+  portfolioData.categories.forEach((cat, index) => {
+    const option = document.createElement('option');
+    option.value = index;
+    option.textContent = cat.name;
+    select.appendChild(option);
   });
 }
+
+// 添加分类
 function addCategory(){
-  const n = document.getElementById('newCatName').value.trim();
-  if(!n) return;
-  portfolioData.categories.push({ name: n, videos: [] });
+  const name = document.getElementById('newCatName').value.trim();
+  if(!name) {
+    alert("❌ 请输入分类名称！");
+    return;
+  }
+  // 检查分类是否重复
+  const isExist = portfolioData.categories.some(cat => cat.name === name);
+  if(isExist) {
+    alert("❌ 该分类已存在！");
+    return;
+  }
+  portfolioData.categories.push({ name: name, videos: [] });
   saveData();
   renderCatSelect();
   renderCategoryList();
   document.getElementById('newCatName').value = '';
+  alert("✅ 分类添加成功！");
 }
-function deleteCategory(i){
-  if(confirm('确定删除？')){
-    portfolioData.categories.splice(i, 1); saveData();
-    renderCatSelect(); renderCategoryList(); renderVideoList();
+
+// 删除分类
+function deleteCategory(index){
+  if(confirm(`⚠️ 确定要删除该分类？分类下的视频会一起删除！`)){
+    portfolioData.categories.splice(index, 1);
+    saveData();
+    renderCatSelect();
+    renderCategoryList();
+    renderVideoList();
+    alert("✅ 分类删除成功！");
   }
 }
+
+// 渲染分类列表
 function renderCategoryList(){
-  const l = document.getElementById('categoryList'); l.innerHTML = '';
-  portfolioData.categories.forEach((c, i)=>{
-    const d = document.createElement('div'); d.className = 'item';
-    d.innerHTML = `<div>${c.name} (${c.videos.length}个)</div><button class="btn btn-danger" onclick="deleteCategory(${i})">删除</button>`;
-    l.appendChild(d);
+  const list = document.getElementById('categoryList');
+  list.innerHTML = '';
+  portfolioData.categories.forEach((cat, index) => {
+    const item = document.createElement('div');
+    item.className = 'item';
+    item.innerHTML = `
+      <div>${cat.name}（${cat.videos.length}个视频）</div>
+      <button class="btn btn-danger" onclick="deleteCategory(${index})">删除</button>
+    `;
+    list.appendChild(item);
   });
 }
-function addVideo(){ /* 保留原有逻辑 */ }
-function deleteVideo(ci, vi){
-  portfolioData.categories[ci].videos.splice(vi, 1); saveData(); renderVideoList();
+
+// ================= 视频功能（修复分类绑定逻辑） =================
+// 添加视频
+function addVideo(){
+  const catIndex = document.getElementById('videoCatSelect').value;
+  const url = document.getElementById('videoUrlInput').value.trim();
+  const title = document.getElementById('videoTitleInput').value.trim();
+
+  // 校验
+  if(!catIndex) {
+    alert("❌ 请先选择分类！");
+    return;
+  }
+  if(!url) {
+    alert("❌ 请粘贴视频直链！");
+    return;
+  }
+  if(!title) {
+    alert("❌ 请输入视频标题！");
+    return;
+  }
+
+  // 把视频加到对应分类
+  portfolioData.categories[catIndex].videos.push({ url: url, title: title });
+  saveData();
+  renderVideoList();
+  // 清空输入框
+  document.getElementById('videoUrlInput').value = '';
+  document.getElementById('videoTitleInput').value = '';
+  alert("✅ 视频添加成功！刷新主页即可看到");
 }
+
+// 删除视频
+function deleteVideo(catIndex, videoIndex){
+  if(confirm(`⚠️ 确定要删除该视频？`)){
+    portfolioData.categories[catIndex].videos.splice(videoIndex, 1);
+    saveData();
+    renderVideoList();
+    alert("✅ 视频删除成功！");
+  }
+}
+
+// 渲染视频列表
 function renderVideoList(){
-  const l = document.getElementById('videoList'); l.innerHTML = '';
-  portfolioData.categories.forEach((c, ci)=>{
-    c.videos.forEach((v, vi)=>{
-      const d = document.createElement('div'); d.className = 'item';
-      d.innerHTML = `<div>【${c.name}】${v.title}</div><button class="btn btn-danger" onclick="deleteVideo(${ci},${vi})">删除</button>`;
-      l.appendChild(d);
+  const list = document.getElementById('videoList');
+  list.innerHTML = '';
+  portfolioData.categories.forEach((cat, catIndex) => {
+    cat.videos.forEach((video, videoIndex) => {
+      const item = document.createElement('div');
+      item.className = 'item';
+      item.innerHTML = `
+        <div>【${cat.name}】${video.title}</div>
+        <button class="btn btn-danger" onclick="deleteVideo(${catIndex}, ${videoIndex})">删除</button>
+      `;
+      list.appendChild(item);
     });
   });
 }
+
+// ================= 通用保存逻辑 =================
 function saveData(){
   localStorage.setItem('portfolioData', JSON.stringify(portfolioData));
+  // 通知主页更新
+  window.dispatchEvent(new StorageEvent('storage', {
+    key: 'portfolioData',
+    newValue: JSON.stringify(portfolioData)
+  }));
 }
-document.getElementById('adminPwd').addEventListener('keypress', e=>{if(e.key==='Enter')login()});
+
+// 回车登录
+document.getElementById('adminPwd').addEventListener('keypress', e => {
+  if(e.key === 'Enter') login();
+});
 </script>
 
 </body>
