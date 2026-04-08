@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>短视频作品集 | 个人主页</title>
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+  background: linear-gradient(-45deg, #f0f9ff, #e0f2fe, #faf5ff, #d1fae5);
+  background-size: 400% 400%;
+  animation: bgGradient 20s ease infinite;
+  color: #1f2937;
+  min-height: 100vh;
+  padding: 60px 20px;
+  max-width: 960px;
+  margin: 0 auto;
+  line-height: 1.6;
+  position: relative;
+}
+
+@keyframes bgGradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* 隐藏管理入口 - 右上角 */
+.admin-entry {
+  position: absolute;
+  top: 10px;
+  right: 14px;
+  opacity: 0.08;
+  transition: all 0.3s;
+  font-size: 12px;
+  color: #666;
+}
+.admin-entry:hover {
+  opacity: 0.7;
+}
+.admin-entry a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.avatar-section {
+  text-align: center;
+  margin-bottom: 42px;
+  animation: fadeInUp 1s ease-out;
+}
+
+.avatar {
+  width: 190px;
+  height: 190px;
+  border-radius: 28px;
+  object-fit: cover;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  border: 6px solid #fff;
+  transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+  animation: avatarBreath 6s infinite ease-in-out;
+}
+
+@keyframes avatarBreath {
+  0%,100%{transform:scale(1);}
+  50%{transform:scale(1.02);}
+}
+
+.avatar:hover {
+  transform: scale(1.08) rotate(0.5deg);
+  box-shadow: 0 15px 40px rgba(0,80,255,0.15);
+}
+
+.resume-section {
+  text-align: center;
+  margin-bottom: 62px;
+  animation: fadeInUp 1.1s ease-out;
+}
+
+.resume-btn {
+  padding: 18px 50px;
+  background: linear-gradient(135deg, #3b82f6, #10b981);
+  color: #fff;
+  border: none;
+  border-radius: 20px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 8px 25px rgba(59, 130, 246, 0.25);
+  transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.resume-btn:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 32px rgba(59, 130, 246, 0.35), 0 0 25px rgba(59,130,246,0.15);
+}
+
+.resume-btn::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  animation: lightMove 3.5s infinite;
+}
+
+@keyframes lightMove {
+  100% { left: 100%; }
+}
+
+.category {
+  background: rgba(255, 255, 255, 0.93);
+  backdrop-filter: blur(10px);
+  border-radius: 24px;
+  padding: 36px;
+  margin-bottom: 32px;
+  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.05);
+  transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+  animation: fadeInUp 1.2s ease-out;
+}
+
+.category:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 45px rgba(0, 0, 0, 0.08);
+}
+
+.category-title {
+  font-size: 23px;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 24px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid #e5e7eb;
+  position: relative;
+}
+
+.category-title::before {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 60px;
+  height: 3px;
+  background: linear-gradient(90deg, #3b82f6, #10b981);
+  border-radius: 3px;
+}
+
+.video-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+  gap: 26px;
+}
+
+.video-item {
+  background: #ffffff;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
+  transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+  position: relative;
+}
+
+.video-item:hover {
+  transform: translateY(-7px) scale(1.025);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.11), 0 0 22px rgba(59,130,246,0.12);
+}
+
+video {
+  width: 100%;
+  display: block;
+}
+
+.video-title {
+  padding: 16px;
+  font-size: 15px;
+  color: #374151;
+  font-weight: 500;
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+</style>
+</head>
+
+<body>
+
+<!-- 管理入口 - 右上角隐藏 -->
+<div class="admin-entry">
+  <a href="admin.html">Admin</a>
+</div>
+
+<div class="avatar-section">
+  <img id="avatar" class="avatar" src="https://picsum.photos/400/400">
+</div>
+
+<div class="resume-section">
+  <button class="resume-btn" onclick="openResume()">查看简历附件</button>
+</div>
+
+<div id="categoriesContainer"></div>
+
+<script>
+let portfolioData = JSON.parse(localStorage.getItem('portfolioData')) || {
+  avatarUrl: "https://picsum.photos/400/400",
+  resumeUrl: "",
+  categories: []
+};
+
+function init() {
+  document.getElementById("avatar").src = portfolioData.avatarUrl;
+  renderCategories();
+}
+
+function openResume() {
+  if (portfolioData.resumeUrl) window.open(portfolioData.resumeUrl, "_blank");
+  else alert("简历暂未配置");
+}
+
+function renderCategories() {
+  const con = document.getElementById("categoriesContainer");
+  con.innerHTML = "";
+  portfolioData.categories.forEach(cat => {
+    const div = document.createElement("div");
+    div.className = "category";
+    div.innerHTML = `
+      <div class="category-title">${cat.name}</div>
+      <div class="video-grid">
+        ${cat.videos.map(v => `
+          <div class="video-item">
+            <video controls playsinline src="${v.url}"></video>
+            <div class="video-title">${v.title}</div>
+          </div>
+        `).join('')}
+      </div>
+    `;
+    con.appendChild(div);
+  });
+}
+
+init();
+window.addEventListener("storage", () => {
+  portfolioData = JSON.parse(localStorage.getItem('portfolioData'));
+  init();
+});
+</script>
+
+</body>
+</html>
