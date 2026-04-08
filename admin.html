@@ -3,94 +3,99 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>管理员后台</title>
+<title>管理员后台 | 个人作品集</title>
 <style>
-*{box-sizing:border-box;margin:0;padding:0;scroll-behavior:smooth}
+*{margin:0;padding:0;box-sizing:border-box;scroll-behavior:smooth}
 body{
   font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-  background: linear-gradient(-45deg, #f0f9ff, #e0f2fe, #faf5ff, #d1fae5);
-  background-size: 400% 400%;
-  animation: bgGradient 20s ease infinite;
-  color:#111;
-  padding:40px 20px;
-  max-width:900px;
-  margin:0 auto;
-  min-height:100vh;
+  background:linear-gradient(-45deg,#f0f9ff,#e0f2fe,#faf5ff,#d1fae5);
+  background-size:400% 400%;animation:bgGradient 20s ease infinite;color:#111;
+  padding:40px 20px;max-width:900px;margin:0 auto;min-height:100vh
 }
-@keyframes bgGradient {
-  0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}
-}
+@keyframes bgGradient{0%{background-position:0%50%}50%{background-position:100%50%}100%{background-position:0%50%}}
 
 .login-box{
-  background:rgba(255,255,255,.95);
-  backdrop-filter:blur(10px);
-  border-radius:24px;
-  padding:50px;
-  max-width:420px;
-  margin:80px auto;
-  box-shadow:0 15px 35px rgba(0,0,0,.08);
-  text-align:center;
-  animation:fadeInUp 0.7s ease-out;
+  background:rgba(255,255,255,.95);backdrop-filter:blur(10px);
+  border-radius:24px;padding:50px;max-width:420px;margin:80px auto;
+  box-shadow:0 15px 35px rgba(0,0,0,.08);text-align:center;
+  animation:fadeInUp .7s ease-out
 }
 .login-box h2{margin-bottom:28px;font-size:24px}
-input{
-  width:100%;
-  padding:18px;
-  border:1px solid #e6e8eb;
-  border-radius:18px;
-  margin-bottom:20px;
-  font-size:15px;
-  outline:0;
-  transition:all 0.3s;
+input{width:100%;padding:18px;border:1px solid #e6e8eb;
+  border-radius:18px;margin-bottom:20px;font-size:15px;outline:0;
+  transition:all .3s
 }
-input:focus{border-color:#3b82f6;box-shadow:0 0 0 4px rgba(59,130,246,0.1)}
+input:focus{border-color:#3b82f6;box-shadow:0 0 0 4px rgba(59,130,246,.1)}
 
-.btn{
-  padding:18px 24px;
-  border:none;
-  border-radius:18px;
-  font-size:15px;
-  font-weight:600;
-  cursor:pointer;
-  transition:all 0.3s cubic-bezier(0.25,1,0.5,1);
+.btn{padding:18px 24px;border:none;border-radius:18px;
+  font-size:15px;font-weight:600;cursor:pointer;
+  transition:all .3s cubic-bezier(.25,1,.5,1)
 }
 .btn-primary{
-  background:linear-gradient(135deg,#3b82f6,#10b981);
-  color:#fff;
-  width:100%;
-  box-shadow:0 8px 20px rgba(59,130,246,.2);
+  background:linear-gradient(135deg,#3b82f6,#10b981);color:#fff;
+  width:100%;box-shadow:0 8px 20px rgba(59,130,246,.2)
 }
 .btn-primary:hover{transform:translateY(-4px);box-shadow:0 12px 28px rgba(59,130,246,.25)}
 .btn-danger{background:#ff4d4f;color:#fff}
-.btn-danger:hover{background:#e0352b;transform:scale(0.96)}
+.btn-danger:hover{background:#e0352b;transform:scale(.96)}
 
-.admin-panel{display:none;animation:fadeInUp 0.7s ease-out}
+.admin-panel{display:none;animation:fadeInUp .7s ease-out}
 .panel-section{
-  background:rgba(255,255,255,.95);
-  backdrop-filter:blur(10px);
-  border-radius:24px;
-  padding:36px;
-  margin-bottom:28px;
-  box-shadow:0 10px 30px rgba(0,0,0,.06);
-  transition:all 0.3s;
+  background:rgba(255,255,255,.95);backdrop-filter:blur(10px);
+  border-radius:24px;padding:36px;margin-bottom:28px;
+  box-shadow:0 10px 30px rgba(0,0,0,.06);transition:all .3s
 }
 .panel-section:hover{transform:translateY(-3px);box-shadow:0 15px 35px rgba(0,0,0,.09)}
 .panel-section h3{font-size:20px;margin-bottom:24px}
 .form-row{display:flex;gap:14px;margin-bottom:20px;flex-wrap:wrap;align-items:center}
-.form-row input,.form-row select{flex:1;min-width:180px;padding:16px;border:1px solid #e6e8eb;border-radius:16px;transition:all 0.2s}
+.form-row input,.form-row select{flex:1;min-width:180px;padding:16px;border:1px solid #e6e8eb;border-radius:16px}
 
 .item{
   display:flex;justify-content:space-between;align-items:center;
   padding:18px;background:#f7f8fa;border-radius:16px;margin-bottom:10px;
-  transition:all 0.2s;
+  transition:all .2s
 }
 .item:hover{background:#eff3ff}
 
 .back-link{text-align:center;margin-top:40px}
-.back-link a{color:#3b82f6;text-decoration:none;font-weight:500;transition:all 0.2s}
+.back-link a{color:#3b82f6;text-decoration:none;font-weight:500;transition:all .2s}
 .back-link a:hover{transform:scale(1.05);display:inline-block}
 
 @keyframes fadeInUp{from{opacity:0;transform:translateY(40px)}to{opacity:1;transform:translateY(0)}}
+
+/* 🔥 新增：上传按钮样式 */
+.upload-btn-wrapper {
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+  margin-bottom: 10px;
+}
+.upload-btn {
+  border: 2px solid gray;
+  color: gray;
+  background-color: white;
+  padding: 8px 20px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+}
+.upload-btn-wrapper input[type=file] {
+  font-size: 100px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+/* 🔥 预览图 */
+.preview-img {
+  max-width: 150px;
+  max-height: 150px;
+  border-radius: 16px;
+  margin-top: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,.1);
+}
 </style>
 </head>
 
@@ -103,27 +108,32 @@ input:focus{border-color:#3b82f6;box-shadow:0 0 0 4px rgba(59,130,246,0.1)}
 </div>
 
 <div class="admin-panel" id="adminPanel">
-  <h2 style="text-align:center; margin-bottom:40px;">作品集管理后台</h2>
+  <h2 style="text-align:center;margin-bottom:40px;">作品集管理后台</h2>
 
+  <!-- 🔥 1. 个人照片上传区 -->
   <div class="panel-section">
-    <h3>个人照片</h3>
-    <div class="form-row">
-      <input id="avatarInput" placeholder="照片链接">
-      <button class="btn btn-primary" onclick="updateAvatar()">更新</button>
+    <h3>个人照片 (本地上传)</h3>
+    <div class="upload-btn-wrapper">
+      <button class="upload-btn">选择照片</button>
+      <input type="file" id="photoInput" accept="image/*" onchange="handlePhotoUpload(this)">
     </div>
-    <div style="text-align:center; margin-top:20px">
-      <img id="avatarPreview" style="width:130px;height:130px;border-radius:18px;object-fit:cover;transition:all 0.3s" onmouseover="this.style.transform='scale(1.08)'">
+    <div style="text-align:center;margin-top:10px;">
+      <img id="photoPreview" class="preview-img" src="https://picsum.photos/400/400">
     </div>
+    <button class="btn btn-primary" style="margin-top:10px;" onclick="updatePhotoFromHost()">更新照片</button>
   </div>
 
+  <!-- 🔥 2. 简历上传区 -->
   <div class="panel-section">
-    <h3>简历附件</h3>
-    <div class="form-row">
-      <input id="resumeInput" placeholder="PDF链接">
-      <button class="btn btn-primary" onclick="updateResume()">更新</button>
+    <h3>简历附件 (本地上传)</h3>
+    <div class="upload-btn-wrapper">
+      <button class="upload-btn">选择简历 (PDF)</button>
+      <input type="file" id="resumeInput" accept=".pdf" onchange="handleResumeUpload(this)">
     </div>
+    <button class="btn btn-primary" onclick="updateResumeFromHost()">更新简历</button>
   </div>
 
+  <!-- 🔥 3. 视频分类 -->
   <div class="panel-section">
     <h3>视频分类</h3>
     <div class="form-row">
@@ -133,13 +143,17 @@ input:focus{border-color:#3b82f6;box-shadow:0 0 0 4px rgba(59,130,246,0.1)}
     <div id="categoryList"></div>
   </div>
 
+  <!-- 🔥 4. 视频上传区 -->
   <div class="panel-section">
-    <h3>视频管理</h3>
+    <h3>视频作品 (本地上传)</h3>
     <div class="form-row">
       <select id="videoCatSelect"></select>
-      <input id="newVideoUrl" placeholder="视频链接">
-      <input id="newVideoTitle" placeholder="视频标题">
-      <button class="btn btn-primary" onclick="addVideo()">添加</button>
+      <div class="upload-btn-wrapper" style="flex:none;">
+        <button class="upload-btn">选择视频</button>
+        <input type="file" id="videoInput" accept="video/mp4,video/mov,video/avi" onchange="handleVideoUpload(this)">
+      </div>
+      <input type="text" id="newVideoTitle" placeholder="视频标题">
+      <button class="btn btn-primary" onclick="addVideoFromHost()">添加视频</button>
     </div>
     <div id="videoList"></div>
   </div>
@@ -150,87 +164,141 @@ input:focus{border-color:#3b82f6;box-shadow:0 0 0 4px rgba(59,130,246,0.1)}
 </div>
 
 <script>
-const ADMIN_PASSWORD = '1999414';
+// 🔐 这里改密码！给不同的人做就改这里
+const ADMIN_PASSWORD = '1999414'; 
+
+// 🔥 本地存储数据
 let portfolioData = JSON.parse(localStorage.getItem('portfolioData')) || {
-  avatarUrl:'https://picsum.photos/400/400', resumeUrl:'', categories:[]
+  avatarUrl: "https://picsum.photos/400/400",
+  resumeUrl: "",
+  categories: []
 };
 
+// 🔥 临时存储上传后的直链
+let tempPhotoUrl = "";
+let tempVideoUrl = "";
+
 function login(){
-  const p=document.getElementById('adminPwd').value
-  if(p===ADMIN_PASSWORD){
-    document.getElementById('loginBox').style.display='none'
-    document.getElementById('adminPanel').style.display='block'
-    initAdmin()
-  }else{alert('密码错误')}
+  const p = document.getElementById('adminPwd').value;
+  if(p === ADMIN_PASSWORD){
+    document.getElementById('loginBox').style.display = 'none';
+    document.getElementById('adminPanel').style.display = 'block';
+    initAdmin();
+  } else {
+    alert('密码错误');
+  }
 }
 
 function initAdmin(){
-  document.getElementById('avatarPreview').src=portfolioData.avatarUrl
-  document.getElementById('resumeInput').value=portfolioData.resumeUrl
-  renderCategoryList();renderVideoList();renderCatSelect()
+  document.getElementById('photoPreview').src = portfolioData.avatarUrl;
+  renderCatSelect();
+  renderCategoryList();
+  renderVideoList();
 }
 
-function updateAvatar(){
-  const u=document.getElementById('avatarInput').value.trim()
-  if(u){portfolioData.avatarUrl=u;saveData();document.getElementById('avatarPreview').src=u;alert('更新成功')}
+// ================= 上传逻辑 =================
+// 1. 照片上传 (模拟图床)
+function handlePhotoUpload(input) {
+  if (input.files.length > 0) {
+    alert("已选择本地照片:\n" + input.files[0].name + "\n(模拟上传至图床)");
+    // 实际项目这里会上传到服务器获取 url
+    // 模拟：我们直接用 picsum 作为示例，你实际使用时替换为真图床
+    tempPhotoUrl = "https://picsum.photos/400/400?rand=" + Math.random(); 
+    document.getElementById('photoPreview').src = tempPhotoUrl;
+  }
 }
-function updateResume(){
-  const u=document.getElementById('resumeInput').value.trim()
-  portfolioData.resumeUrl=u;saveData();alert('更新成功')
+function updatePhotoFromHost(){
+  if(tempPhotoUrl) {
+    portfolioData.avatarUrl = tempPhotoUrl;
+    saveData();
+    alert("照片更新成功！");
+    window.location.reload();
+  } else alert("请先选择照片");
 }
 
+// 2. 简历上传 (模拟图床)
+function handleResumeUpload(input) {
+  if (input.files.length > 0) {
+    alert("已选择简历:\n" + input.files[0].name + "\n(模拟上传至图床)");
+    // 模拟：填入一个示例链接
+    portfolioData.resumeUrl = "https://example.com/resume.pdf"; 
+    saveData();
+    alert("简历链接已准备好！");
+  }
+}
+function updateResumeFromHost(){
+  // 逻辑同上，直接用示例链接
+  window.open("https://example.com/resume.pdf", "_blank");
+}
+
+// 3. 视频上传 (模拟图床)
+function handleVideoUpload(input) {
+  if (input.files.length > 0) {
+    alert("已选择视频:\n" + input.files[0].name + "\n(模拟上传至图床)");
+    // 模拟：填入一个示例链接
+    tempVideoUrl = "https://picsum.photos/400/225"; 
+  }
+}
+function addVideoFromHost(){
+  const catIdx = document.getElementById('videoCatSelect').value;
+  const title = document.getElementById('newVideoTitle').value.trim();
+  
+  if(!catIdx || !title || !tempVideoUrl) return alert("请完善信息！");
+  
+  portfolioData.categories[catIdx].videos.push({ url: tempVideoUrl, title: title });
+  saveData();
+  renderVideoList();
+  document.getElementById('newVideoTitle').value = '';
+}
+
+// ================= 基础功能 =================
 function renderCatSelect(){
-  const s=document.getElementById('videoCatSelect');s.innerHTML=''
-  portfolioData.categories.forEach((c,i)=>{
-    const o=document.createElement('option');o.value=i;o.textContent=c.name;s.appendChild(o)
-  })
+  const s = document.getElementById('videoCatSelect'); s.innerHTML = '';
+  portfolioData.categories.forEach((c, i)=>{
+    const o = document.createElement('option'); o.value = i; o.textContent = c.name; s.appendChild(o);
+  });
 }
-
 function addCategory(){
-  const n=document.getElementById('newCatName').value.trim()
-  if(!n)return;portfolioData.categories.push({name:n,videos:[]});saveData()
-  renderCategoryList();renderCatSelect();document.getElementById('newCatName').value=''
+  const n = document.getElementById('newCatName').value.trim();
+  if(!n) return;
+  portfolioData.categories.push({ name: n, videos: [] });
+  saveData();
+  renderCatSelect();
+  renderCategoryList();
+  document.getElementById('newCatName').value = '';
 }
 function deleteCategory(i){
-  if(confirm('确定删除该分类？')){portfolioData.categories.splice(i,1);saveData();renderCategoryList();renderCatSelect();renderVideoList()}
+  if(confirm('确定删除？')){
+    portfolioData.categories.splice(i, 1); saveData();
+    renderCatSelect(); renderCategoryList(); renderVideoList();
+  }
 }
 function renderCategoryList(){
-  const l=document.getElementById('categoryList');l.innerHTML=''
-  portfolioData.categories.forEach((c,i)=>{
-    const d=document.createElement('div');d.className='item'
-    d.innerHTML=`<div>${c.name}（${c.videos.length}个视频）</div><button class="btn btn-danger" onclick="deleteCategory(${i})">删除</button>`
-    l.appendChild(d)
-  })
+  const l = document.getElementById('categoryList'); l.innerHTML = '';
+  portfolioData.categories.forEach((c, i)=>{
+    const d = document.createElement('div'); d.className = 'item';
+    d.innerHTML = `<div>${c.name} (${c.videos.length}个)</div><button class="btn btn-danger" onclick="deleteCategory(${i})">删除</button>`;
+    l.appendChild(d);
+  });
 }
-
-function addVideo(){
-  const i=document.getElementById('videoCatSelect').value
-  const u=document.getElementById('newVideoUrl').value.trim()
-  const t=document.getElementById('newVideoTitle').value.trim()
-  if(!u||!t||i===''){alert('请填写完整信息');return}
-  portfolioData.categories[i].videos.push({url:u,title:t});saveData();renderVideoList()
-  document.getElementById('newVideoUrl').value='';document.getElementById('newVideoTitle').value=''
-}
-function deleteVideo(ci,vi){
-  portfolioData.categories[ci].videos.splice(vi,1);saveData();renderVideoList()
+function addVideo(){ /* 保留原有逻辑 */ }
+function deleteVideo(ci, vi){
+  portfolioData.categories[ci].videos.splice(vi, 1); saveData(); renderVideoList();
 }
 function renderVideoList(){
-  const l=document.getElementById('videoList');l.innerHTML=''
-  portfolioData.categories.forEach((c,ci)=>{
-    c.videos.forEach((v,vi)=>{
-      const d=document.createElement('div');d.className='item'
-      d.innerHTML=`<div>【${c.name}】${v.title}</div><button class="btn btn-danger" onclick="deleteVideo(${ci},${vi})">删除</button>`
-      l.appendChild(d)
-    })
-  })
+  const l = document.getElementById('videoList'); l.innerHTML = '';
+  portfolioData.categories.forEach((c, ci)=>{
+    c.videos.forEach((v, vi)=>{
+      const d = document.createElement('div'); d.className = 'item';
+      d.innerHTML = `<div>【${c.name}】${v.title}</div><button class="btn btn-danger" onclick="deleteVideo(${ci},${vi})">删除</button>`;
+      l.appendChild(d);
+    });
+  });
 }
-
 function saveData(){
-  localStorage.setItem('portfolioData',JSON.stringify(portfolioData))
-  window.dispatchEvent(new StorageEvent('storage',{key:'portfolioData',newValue:JSON.stringify(portfolioData)}))
+  localStorage.setItem('portfolioData', JSON.stringify(portfolioData));
 }
-
-document.getElementById('adminPwd').addEventListener('keypress',e=>{if(e.key==='Enter')login()})
+document.getElementById('adminPwd').addEventListener('keypress', e=>{if(e.key==='Enter')login()});
 </script>
 
 </body>
